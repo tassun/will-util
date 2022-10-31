@@ -32,8 +32,8 @@ export declare class Utilities {
      * @param dir
      * @returns string
      */
-    static getWorkingDir(dir: string): string;
-    /**
+     static getWorkingDir(dir: string, parentnames?: string[]): string;
+     /**
      * To get date in format dd/MM/yyyy
      * @param now Date or undefind
      * @returns string

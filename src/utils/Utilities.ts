@@ -5,11 +5,13 @@ export class Utilities {
 	 * @param dir 
 	 * @returns string
 	 */
-    public static getWorkingDir(dir: string) : string {
+    public static getWorkingDir(dir: string, parentnames: string[] = ["src","dist"]) : string {
         let basename = path.basename(dir);
-        if(basename=="src" || basename=="dist") {
-            dir = path.dirname(dir);
-        }
+		if(parentnames.length>0) {
+			for(let name of parentnames) {
+				if(name==basename) return path.dirname(dir);
+			}
+		}
         return dir;
     }
 

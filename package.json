@@ -1,6 +1,6 @@
 {
   "name": "will-util",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Utility functional",
   "main": "index.js",
   "scripts": {
@@ -12,7 +12,8 @@
     "Utilities",
     "Arguments",
     "Iterator",
-    "StringTokenizer"
+    "StringTokenizer",
+    "Configure"
   ],
   "author": "tassun_oro@hotmail.com",
   "license": "MIT",
@@ -25,8 +26,10 @@
     "url": "https://github.com/tassun/will-util.git"
   },
   "devDependencies": {
+    "@types/config": "^3.3.0",
     "@types/jest": "^29.2.0",
     "@types/node": "^18.11.7",
+    "config": "^3.3.8",
     "jest": "^29.2.2",
     "ts-dev": "^2.1.16",
     "ts-jest": "^29.0.3",

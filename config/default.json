@@ -1,0 +1,6 @@
+{
+    "authtype":"SYSTEM",
+    "authentications": [
+        { "authtype":"SYSTEM", "domainname":"mydomain.com", "tenanturl":"", "basedn":"" , "enabled": true }
+    ]
+}

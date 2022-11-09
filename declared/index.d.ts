@@ -197,3 +197,19 @@ export declare class Utilities {
      */
     static parseDate(dataValue?: any, defaultValue?: Date): Date | undefined;
 }
+
+/**
+ * Configure class support read file config/default.json
+ */
+ export declare class Configure {
+    static configurations?: any;
+    private static initConfig;
+    static readConfig(curDir?: string): any;
+    static getConfig(key: string): any;
+    static hasConfig(key: string): boolean;
+    static reloadConfig(): void;
+    get<T>(key: string): T;
+    has(key: string): boolean;
+}
+declare const _default: Configure;
+export default _default;

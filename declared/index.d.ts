@@ -208,8 +208,10 @@ export declare class Utilities {
     static getConfig(key: string): any;
     static hasConfig(key: string): boolean;
     static reloadConfig(): void;
+    static getEnv(key: string, defaultValue?: string): any;
     get<T>(key: string): T;
     has(key: string): boolean;
+    env(key: string, defaultValue?: string): any;
 }
 declare const _default: Configure;
 export default _default;

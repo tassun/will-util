@@ -98,3 +98,25 @@ console.log(Utilities.compareString("BBB","AAA")); // result is 1
 | parseFloat | To parse float (especially from string). |
 | parseBoolean | To parse boolean (especially from string). |
 | parseDate | To parse Date with data value string in format dd/MM/yyyy, yyyy-MM-dd, dd/MM/yyyy HH:mmss, yyyy-MM-dd HH:mm:ss. |
+
+### Configure
+Configure class implements for reading config/default.json and environment variables
+
+```typescript
+import { Configure } from "will-util";
+import config from "will-util";
+
+console.log(Configure.hasConfig("SECTION"));
+console.log(Configure.getConfig("SECTION"));
+console.log(Configure.getEnv("SECTION"));
+console.log(Configure.getEnv("SECTION","TEST"));
+
+console.log(config.has("SECTION"));
+console.log(config.get("SECTION"));
+console.log(config.env("SECTION"));
+console.log(config.env("SECTION","TEST"));
+```
+
+`getEnv` and `env` will return environment variables when found or else return value from default.json and default value in order
+
+

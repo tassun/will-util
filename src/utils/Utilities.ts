@@ -390,4 +390,12 @@ export class Utilities {
         return defaultValue;
     }
 
+	/**
+	 * get current date/time now
+	 * @returns Date
+	 */
+	public static now() : Date {
+		return new Date();
+	}
+	
 }

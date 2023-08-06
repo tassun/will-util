@@ -20,6 +20,6 @@ let tokenstr2 = token2.tokenize();
 console.log(tokenstr2);
 //result is [ 'Hello ', '?', ' world' ]
 
-console.log(Utilities.compareString("AAA","BBB"));
-console.log(Utilities.compareString("AAA","AAA"));
-console.log(Utilities.compareString("BBB","AAA"));
+console.log(Utilities.compareString("AAA","BBB")); //-1
+console.log(Utilities.compareString("AAA","AAA")); //0
+console.log(Utilities.compareString("BBB","AAA")); //1

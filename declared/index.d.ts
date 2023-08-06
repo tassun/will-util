@@ -196,6 +196,11 @@ export declare class Utilities {
      * @returns Date
      */
     static parseDate(dataValue?: any, defaultValue?: Date): Date | undefined;
+    /**
+     * get current date/time now
+     * @returns Date
+     */
+    static now(): Date;
 }
 
 /**

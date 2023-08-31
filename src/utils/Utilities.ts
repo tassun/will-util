@@ -283,7 +283,7 @@ export class Utilities {
     public static parseInteger(dataValue?: any, defaultValue?: number) : number | undefined {
         if(dataValue) {
             if(this.isString(dataValue)) {
-                return parseInt(""+dataValue);
+                return parseInt(dataValue.replaceAll(',', ''));
             } else {
 				if(typeof dataValue === "number") {
 					return dataValue as number;
@@ -301,8 +301,8 @@ export class Utilities {
 	 */
 	public static parseFloat(dataValue?: any, defaultValue?: number) : number | undefined {
         if(dataValue) {
-            if(this.isString(dataValue)) {
-                return parseFloat(""+dataValue);
+            if(this.isString(dataValue)) {				
+                return parseFloat(dataValue.replaceAll(',', ''));
             } else {
 				if(typeof dataValue === "number") {
 					return dataValue as number;

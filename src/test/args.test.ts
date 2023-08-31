@@ -24,10 +24,14 @@ describe('Test Utilities', () => {
     it("parseInteger",() => {
         let num = Utilities.parseInteger("2022");
         expect(num).toStrictEqual(2022);
+        let numwithcomma = Utilities.parseInteger("2,022");
+        expect(numwithcomma).toStrictEqual(2022);
     });
     it("parseFloat",() => {
         let flt = Utilities.parseFloat("2022.10");
         expect(flt).toStrictEqual(2022.10);
+        let fltwithcomma = Utilities.parseFloat("2,022.10");
+        expect(fltwithcomma).toStrictEqual(2022.10);
     });
     it("parseBoolean",() => {
         let bool = Utilities.parseBoolean("false");

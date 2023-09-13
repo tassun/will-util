@@ -397,5 +397,16 @@ export class Utilities {
 	public static now() : Date {
 		return new Date();
 	}
+
+    public static translateVariables(template: string, variables: any) : string {
+        let data = variables;
+        if(variables instanceof Map) {
+            data = Object.fromEntries(variables);
+        }
+        for(let key in data) {
+            template = template.replaceAll("${"+key+"}", data[key]);
+        }
+        return template;
+    }
 	
 }

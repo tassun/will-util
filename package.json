@@ -1,6 +1,6 @@
 {
   "name": "will-util",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "Utility functional",
   "main": "index.js",
   "scripts": {
@@ -37,6 +37,6 @@
     "typescript": "^4.8.4"
   },
   "engines": {
-    "node": ">=14"
+    "node": ">=15"
   }
 }

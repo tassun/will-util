@@ -34,6 +34,17 @@ while(it.hasNext()) {
 }
 ```
 
+### RandomUtility
+Utility for randomize number or alphabets with min/max range
+
+```typescript
+import { RandomUtility } from "will-util";
+
+console.log(RandomUtility.getRandomNum(1,10));
+console.log(RandomUtility.random(6)); 
+console.log(RandomUtility.randomNumber(6));
+```
+
 ### StringTokenizer
 StringTokenizer handle for token raw string with delimiters.
 

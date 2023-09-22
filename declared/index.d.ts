@@ -16,6 +16,14 @@ export declare class Iterator<T> {
     next(): T;
 }
 
+export declare class RandomUtility {
+    static readonly ALPHABETS: string[];
+    static readonly NUMERICS: string[];
+    static getRandomNum(min: number, max: number): number;
+    static random(len?: number, alphabets?: string[]): string;
+    static randomNumber(len?: number, alphabets?: string[]): string;
+}
+
 export declare class StringTokenizer {
     private text;
     private separator;

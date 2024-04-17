@@ -11,10 +11,8 @@ export class Configure {
         }
     }
 
-    public static readConfig(curDir?: string) : any {
+    public static readConfig(filepath: string = path.join(process.cwd(), "config")) : any {
         try {
-            if(!curDir) curDir = process.cwd();
-            let filepath = path.join(process.cwd(), 'config')
             let filename = path.resolve(filepath,'default.json');
             let filedata = fs.readFileSync(filename,'utf-8');
             return JSON.parse(filedata);
@@ -25,12 +23,12 @@ export class Configure {
     }
 
     public static getConfig(key: string) : any {
-        this.initConfig();
+        Configure.initConfig();
         return Configure.configurations[key];
     }
 
     public static hasConfig(key: string) : boolean {
-        this.initConfig();
+        Configure.initConfig();
         let value = Configure.configurations?Configure.configurations[key]:null;
         if(value === undefined || value === null) return false;
         return true;

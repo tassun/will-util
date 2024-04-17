@@ -109,6 +109,8 @@ console.log(Utilities.compareString("BBB","AAA")); // result is 1
 | parseFloat | To parse float (especially from string). |
 | parseBoolean | To parse boolean (especially from string). |
 | parseDate | To parse Date with data value string in format dd/MM/yyyy, yyyy-MM-dd, dd/MM/yyyy HH:mmss, yyyy-MM-dd HH:mm:ss. |
+| now | To get current date/time. |
+| translateVariables | To replace all variables in markup ${variable-name}. |
 
 ### Configure
 Configure class implements for reading config/default.json and environment variables

@@ -43,7 +43,7 @@ class Arguments {
             for(let i = 0,isz=args.length; i<isz; i++) {
                 let para = args[i];
                 for(let j=0; j<options.length; j++) {
-                    if(para == options[j] && (args.length>(i+1)) && !this.isParameterOption(args[i+1])) {
+                    if(para == options[j] && (args.length>(i+1))) {
                         return parseInt(args[i+1]);
                     }
                 }
@@ -58,7 +58,7 @@ class Arguments {
             for(let i = 0,isz=args.length; i<isz; i++) {
                 let para = args[i];
                 for(let j=0; j<options.length; j++) {
-                    if(para == options[j] && (args.length>(i+1)) && !this.isParameterOption(args[i+1])) {
+                    if(para == options[j] && (args.length>(i+1))) {
                         return parseFloat(args[i+1]);
                     }
                 }

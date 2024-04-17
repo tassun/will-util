@@ -1,10 +1,10 @@
 declare class Arguments {
     private static isParameterOption;
-    static getString(args?: string[], defaultValue?: string, ...options: string[]): string | undefined;
-    static getDate(args?: string[], defaultValue?: Date, ...options: string[]): Date | undefined;
-    static getInteger(args?: string[], defaultValue?: number, ...options: string[]): number | undefined;
-    static getFloat(args?: string[], defaultValue?: number, ...options: string[]): number | undefined;
-    static getBoolean(args?: string[], defaultValue?: boolean, ...options: string[]): boolean | undefined;
+    static getString(args?: string[] | null, defaultValue?: string | null, ...options: string[]): string | undefined | null;
+    static getDate(args?: string[] | null, defaultValue?: Date | null, ...options: string[]): Date | undefined | null;
+    static getInteger(args?: string[] | null, defaultValue?: number | null, ...options: string[]): number | undefined | null;
+    static getFloat(args?: string[] | null, defaultValue?: number | null, ...options: string[]): number | undefined | null;
+    static getBoolean(args?: string[] | null, defaultValue?: boolean | null, ...options: string[]): boolean | undefined | null;
 }
 export { Arguments };
 
@@ -213,12 +213,26 @@ export declare class Utilities {
 }
 
 /**
+ * Setting class support read file config/setting.json
+ */
+export declare class Setting {
+    static settings?: any;
+    private static initSetting;
+    static readSetting(filepath?: string): any;
+    static getSetting(key: string): any;
+    static hasSetting(key: string): boolean;
+    static reloadSetting(): void;
+    get<T>(key: string): T;
+    has(key: string): boolean;
+}
+
+/**
  * Configure class support read file config/default.json
  */
- export declare class Configure {
+export declare class Configure {
     static configurations?: any;
     private static initConfig;
-    static readConfig(curDir?: string): any;
+    static readConfig(filepath?: string): any;
     static getConfig(key: string): any;
     static hasConfig(key: string): boolean;
     static reloadConfig(): void;

@@ -210,6 +210,7 @@ export declare class Utilities {
      */
     static now(): Date;
     static translateVariables(template: string, variables: any): string;
+    static serializeTimestamp(now: Date, delimiter?: string, includeMillis?: boolean): string;
 }
 
 /**

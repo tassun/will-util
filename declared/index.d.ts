@@ -35,6 +35,14 @@ export declare class StringTokenizer {
 }
 
 export declare class Utilities {
+    static readonly NORMAL = 0;
+    static readonly INTER = 1;
+    static readonly SHORT = 0;
+    static readonly LONG = 1;
+    static SHORT_MONTH_ARRAY: string[];
+    static LONG_MONTH_ARRAY: string[];
+    static SHORT_WEEK_DAY: string[];
+    static LONG_WEEK_DAY: string[];
     /**
      * To get base directory if base name is src or dist
      * @param dir
@@ -205,12 +213,67 @@ export declare class Utilities {
      */
     static parseDate(dataValue?: any, defaultValue?: Date): Date | undefined;
     /**
+ * To parse time with data value string in format HH:mm:ss
+ * @param dataValue
+ * @param defaultValue
+ * @returns Date
+ */
+    static parseTime(dataValue?: string, defaultValue?: Date): Date | undefined;
+    /**
      * get current date/time now
      * @returns Date
      */
     static now(): Date;
+    /**
+     * try to translate variables in template with foramt ${key} with value in variables
+     * @returns string
+     */
     static translateVariables(template: string, variables: any): string;
+    /**
+     * serialize timestamp into string format yyyyMMddHHmmssSSS
+     * @returns string
+     */
     static serializeTimestamp(now: Date, delimiter?: string, includeMillis?: boolean): string;
+    /**
+     * To get date format with short or long month
+     * @returns string
+     */
+    static getFormatDate(date?: Date, fortype?: number, delimiter?: string, forstyle?: number, separater?: string): string;
+    /**
+     * To get date format with short month
+     * @returns string
+     */
+    static getShortDate(date?: Date, delimiter?: string, forstyle?: number): string;
+    /**
+     * To get date format with long month
+     * @returns string
+     */
+    static getLongDate(date?: Date, delimiter?: string, forstyle?: number): string;
+    /**
+     * To get week day with short or long format
+     * @returns string
+     */
+    static getWeekDay(date?: Date, fortype?: number): string;
+    /**
+     * To get short week day
+     * @returns string
+     */
+    static getShortWeekDay(date?: Date): string;
+    /**
+     * To get long week day
+     * @returns string
+     */
+    static getLongWeekDay(date?: Date): string;
+    /**
+     * To get week day format
+     * @returns string
+     */
+    static getFormatWeekDate(date?: Date, fortype?: number, delimiter?: string, forstyle?: number, separater?: string): string;
+    /**
+     * To get date instance from string or number of timestamp
+     * @returns string
+     */
+    static date(input?: string | number, defaultValue?: Date): Date;
 }
 
 /**

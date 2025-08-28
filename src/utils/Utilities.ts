@@ -1,5 +1,14 @@
 import path from 'path';
 export class Utilities {
+	public static readonly NORMAL = 0;
+	public static readonly INTER = 1;
+	public static readonly SHORT = 0;
+	public static readonly LONG = 1;
+	public static SHORT_MONTH_ARRAY = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+	public static LONG_MONTH_ARRAY = ["January", "February", "March", "April", "May", "June",	"July", "August", "September", "October", "November", "December"];
+	public static SHORT_WEEK_DAY = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
+	public static LONG_WEEK_DAY = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
+	
 	/**
 	 * To get base directory if base name is src or dist
 	 * @param dir 
@@ -76,6 +85,9 @@ export class Utilities {
 	 * @returns string
 	 */
 	public static formatDate(now?: Date, ymd: boolean = false) : string { 
+		if(typeof now === 'string') {
+			now = this.parseDate(now);
+		}
 		if(!now) return "";
 		let dd = now.getDate(); 
 		let mm = now.getMonth()+1; 
@@ -99,6 +111,9 @@ export class Utilities {
 	 * @returns string
 	 */
 	public static formatTime(now?: Date) : string {
+		if(typeof now === 'string') {
+			now = this.parseDate(now);
+		}
 		if(!now) return "";
 		return this.getTimeNow(now);
 	}
@@ -110,6 +125,9 @@ export class Utilities {
 	 * @returns string
 	 */
 	public static formatDateTime(now?: Date, ymd: boolean = false) : string {
+		if(typeof now === 'string') {
+			now = this.parseDate(now);
+		}
 		if(!now) return "";
 		return this.formatDate(now,ymd)+" "+this.getTimeNow(now);
 	}
@@ -121,6 +139,14 @@ export class Utilities {
 	 */
 	public static getHMS(now?: Date) : string {
 		if(!now) return "";
+		try {
+			if(now instanceof Date) {
+				return this.getTimeNow(now);
+			} else if(typeof now === 'string') {
+				let date = this.parseDate(now);
+				if(date) return this.getTimeNow(date);
+			}
+		} catch(ex) { }
 		return ""+now;
 	}
 
@@ -345,6 +371,9 @@ export class Utilities {
             if(this.isString(dataValue)) {
 				let datestr = (""+dataValue).trim();
 				if(datestr!="") {
+					if (datestr.indexOf("T") > 0 && datestr.indexOf("Z") > 0) {
+                        try { const dateInstance = new Date(datestr); if(dateInstance) return dateInstance; } catch(ex) { }
+                    }
 					let result = undefined;
 					let separator = " ";
 					if(datestr.indexOf("T")>0) separator = "T";
@@ -365,18 +394,22 @@ export class Utilities {
 					if(time) {
 						if(!result) result = new Date();
 						let [hours, minutes, seconds] = time.split(':');
-						result.setHours(Number(hours));
-						result.setMinutes(Number(minutes));
-						if(seconds.indexOf(".")>0) {
-							let [sec,msec] = seconds.split(".");
-							result.setSeconds(Number(sec));
-							let idx = msec.indexOf("Z");
-							if(idx>0) {
-								msec = msec.substring(0,idx);
+						if(hours !== undefined) result.setHours(Number(hours));
+						if(minutes !== undefined) result.setMinutes(Number(minutes));
+						if(seconds !== undefined) {
+							if(seconds.indexOf(".")>0) {
+								let [sec,msec] = seconds.split(".");
+								result.setSeconds(Number(sec));
+								let idx = msec.indexOf("Z");
+								if(idx>0) {
+									msec = msec.substring(0,idx);
+								}
+								result.setMilliseconds(Number(msec));
+							} else {
+								result.setSeconds(Number(seconds));
 							}
-							result.setMilliseconds(Number(msec));
 						} else {
-							result.setSeconds(Number(seconds));
+							result.setSeconds(0);
 						}
 					}
 					return result;
@@ -390,6 +423,25 @@ export class Utilities {
         return defaultValue;
     }
 
+		/**
+	 * To parse time with data value string in format HH:mm:ss
+	 * @param dataValue 
+	 * @param defaultValue 
+	 * @returns Date
+	 */
+	public static parseTime(dataValue?: string, defaultValue?: Date) : Date | undefined {
+		if(dataValue && dataValue.trim().length>0) {
+			let [hours, minutes, seconds] = dataValue.split(":");
+			let result = new Date();
+			if(hours !== undefined) result.setHours(Number(hours));
+			if(minutes !== undefined) result.setMinutes(Number(minutes));
+			if(seconds !== undefined) result.setSeconds(Number(seconds));
+			else result.setSeconds(0);
+			return result;
+		} 
+		return defaultValue;
+	}
+
 	/**
 	 * get current date/time now
 	 * @returns Date
@@ -398,6 +450,10 @@ export class Utilities {
 		return new Date();
 	}
 
+	/**
+	 * try to translate variables in template with foramt ${key} with value in variables
+	 * @returns string
+	 */
     public static translateVariables(template: string, variables: any) : string {
         let data = variables;
         if(variables instanceof Map) {
@@ -409,6 +465,10 @@ export class Utilities {
         return template;
     }
 	
+	/**
+	 * serialize timestamp into string format yyyyMMddHHmmssSSS
+	 * @returns string
+	 */
     public static serializeTimestamp(now: Date, delimiter?: string, includeMillis: boolean = true) : string {
 		let dd = now.getDate(); 
 		let mo = now.getMonth()+1; 
@@ -428,5 +488,95 @@ export class Utilities {
 		}
 		return [year, month, day, hour, minute, second].join(delimiter?delimiter:'');
     }
+
+	/**
+	 * To get date format with short or long month
+	 * @returns string
+	 */
+	public static getFormatDate(date: Date = new Date(), fortype: number = this.SHORT, delimiter: string = " ", forstyle: number = this.NORMAL, separater: string = ","): string {
+		var dd = date.getDate();
+		var mm = date.getMonth();
+		var yy = date.getFullYear();
+		var mstr = "";
+		if(fortype==this.SHORT) { //short month
+			mstr = this.SHORT_MONTH_ARRAY[mm];
+		} else { //long month
+			mstr = this.LONG_MONTH_ARRAY[mm];
+		}
+		if(forstyle==this.INTER) {
+			return mstr+delimiter+dd+separater+delimiter+yy;
+		}
+		return dd+delimiter+mstr+delimiter+yy;
+	}
+	
+	/**
+	 * To get date format with short month
+	 * @returns string
+	 */
+	public static getShortDate(date: Date = new Date(), delimiter: string = " ", forstyle: number = this.NORMAL) : string {
+		return this.getFormatDate(date,this.SHORT,delimiter,forstyle);
+	}
+	
+	/**
+	 * To get date format with long month
+	 * @returns string
+	 */
+	public static getLongDate(date: Date = new Date(), delimiter: string = " ", forstyle: number = this.NORMAL) : string {
+		return this.getFormatDate(date,this.LONG,delimiter,forstyle);
+	}
+
+	/**
+	 * To get week day with short or long format
+	 * @returns string
+	 */
+	public static getWeekDay(date: Date = new Date(), fortype: number = this.LONG) : string {
+		if(fortype==this.SHORT) { 
+			return this.SHORT_WEEK_DAY[date.getDay()];
+		}
+		return this.LONG_WEEK_DAY[date.getDay()];
+	}
+
+	/**
+	 * To get short week day
+	 * @returns string
+	 */
+	public static getShortWeekDay(date: Date = new Date()) : string {
+		return this.getWeekDay(date,this.SHORT);
+	}
+	
+	/**
+	 * To get long week day
+	 * @returns string
+	 */
+	public static getLongWeekDay(date: Date = new Date()) : string {
+		return this.getWeekDay(date,this.LONG);
+	}
+
+	/**
+	 * To get week day format
+	 * @returns string
+	 */
+	public static getFormatWeekDate(date: Date = new Date(), fortype: number = this.LONG, delimiter: string = " ", forstyle: number = this.NORMAL, separater: string = ","): string {
+		let weekday = this.getWeekDay(date,fortype);
+		let result = this.getFormatDate(date,fortype,delimiter,forstyle,separater);
+		return weekday+separater+delimiter+result;
+	}
+
+	/**
+	 * To get date instance from string or number of timestamp
+	 * @returns string
+	 */
+	public static date(input?: string | number, defaultValue?: Date) : Date {
+		if(input) {
+			if(typeof input == 'string') {
+				let value = this.parseInteger(input);
+				if(value) return new Date(value);
+			}
+			if(typeof input == 'number') {
+				return new Date(input);
+			}
+		}
+		return defaultValue ? defaultValue : new Date();
+	}
 
 }
